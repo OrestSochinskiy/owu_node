@@ -1,2 +1,7 @@
 '.idea' 
 '.idea' 
+/.idea/.gitignore
+/.idea/jsLibraryMappings.xml
+/.idea/modules.xml
+/.idea/owu_node.iml
+/.idea/vcs.xml
