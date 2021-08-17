@@ -23,7 +23,9 @@ fs.readdir(femaleGroup, (err, files) => {
                 return;
             }
 
-            console.log(JSON.parse(data.toString()));
+            const user = JSON.parse(data.toString());
+            console.log(user.gender);
+
         })
     });
 
