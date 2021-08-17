@@ -31,25 +31,47 @@ fs.readdir(femaleGroup, (err, files) => {
                 const oldPath = path.join(femaleGroup, file);
                 const newPath = path.join(maleGroup, file);
 
-                // console.log(oldPath, file, '-- old path');
-                // console.log(newPath, file, '-- new path');
+                console.log(oldPath, file, '-- old path');
+                console.log(newPath, file, '-- new path');
 
-                // fs.rename(oldPath, newPath, err2 => {
-                //     if (err2) {
-                //         console.log(err2);
-                //     }
-                // });
+                fs.rename(oldPath, newPath, err2 => {
+                    if (err2) {
+                        console.log(err2);
+                    }
+                });
             }
         })
     });
 
 });
 
-// fs.readdir(maleGroup,(err, files) => {
-//     if (err) {
-//         console.log(err);
-//         return;
-//     }
-//
-//     files.forEach(file =>)
-// })
+
+fs.readdir(maleGroup,(err, files) => {
+    if (err) {
+        console.log(err);
+        return;
+    }
+
+    files.forEach(file => {
+        const filePath = path.join(maleGroup, file);
+        fs.readFile(filePath, (err1, data) => {
+            if (err1) {
+                console.log(err1);
+                return;
+            }
+
+            const user = JSON.parse(data.toString());
+
+            if (user.gender === 'female') {
+                const oldPath = path.join(maleGroup, file);
+                const newPath = path.join(femaleGroup, file);
+
+                fs.rename(oldPath, newPath, err2 => {
+                    if (err2) {
+                        console.log(err2);
+                    }
+                })
+            }
+        })
+    })
+})
