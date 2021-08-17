@@ -88,14 +88,25 @@ fs.mkdir(movedFiles, {recursive: true}, err => {
 });
 
 const forEdit = path.join(secondTask, 'forEdit');
-
 fs.readdir(forEdit,(err, files) => {
     if (err) {
         console.log(err);
         return;
     }
 
-    console.log(files);
+    files.forEach(file => {
+        const pathForFile = path.join(forEdit, file);
+        // console.log(pathForFile);
+
+        fs.stat(pathForFile, (err1, stats) => {
+            if (err1) {
+                console.log(err1);
+                return;
+            }
+
+            console.log(stats.isDirectory(), '--', file);
+        })
+    })
 })
 
 
