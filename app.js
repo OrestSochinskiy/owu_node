@@ -24,8 +24,21 @@ fs.readdir(femaleGroup, (err, files) => {
             }
 
             const user = JSON.parse(data.toString());
-            console.log(user.gender);
+            // console.log(user.gender);
 
+            if (user.gender === 'male') {
+                const oldPath = path.join(femaleGroup, file);
+                const newPath = path.join(maleGroup, file);
+
+                // console.log(oldPath, file, '-- old path');
+                // console.log(newPath, file, '-- new path');
+
+                fs.rename(oldPath, newPath, err2 => {
+                    if (err2) {
+                        console.log(err2);
+                    }
+                });
+            }
         })
     });
 
