@@ -81,52 +81,52 @@ const path = require('path');
 
 /*<--------------------------------------------------Second task----------------------------------------------------------->*/
 
-const secondTask = path.join(__dirname, 'SecondTask');
-const movedFiles = path.join(__dirname, 'SecondTask', 'movedFiles');
-fs.mkdir(movedFiles, {recursive: true}, err => {
-    if (err) console.log(err);
-});
-
-const forEdit = path.join(secondTask, 'forEdit');
-
-function moveFiles(forEdit) {
-
-    fs.readdir(forEdit, (err, files) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
-
-        files.forEach(file => {
-            const pathForFile = path.join(forEdit, file);
-            // console.log(pathForFile);
-
-            fs.stat(pathForFile, (err1, stats) => {
-                if (err1) {
-                    console.log(err1);
-                    return;
-                }
-
-                console.log(stats.isDirectory(), '--', file);
-
-                if (stats.isDirectory()) {
-                    moveFiles(pathForFile);
-                    return;
-                }
-
-                const newPath = path.join(movedFiles, file);
-                fs.rename(pathForFile, newPath, err2 => {
-                    if (err2) {
-                        console.log(err2);
-                    }
-                })
-            })
-        })
-    })
-
-}
-
-moveFiles(forEdit);
+// const secondTask = path.join(__dirname, 'SecondTask');
+// const movedFiles = path.join(__dirname, 'SecondTask', 'movedFiles');
+// fs.mkdir(movedFiles, {recursive: true}, err => {
+//     if (err) console.log(err);
+// });
+//
+// const forEdit = path.join(secondTask, 'forEdit');
+//
+// function moveFiles(forEdit) {
+//
+//     fs.readdir(forEdit, (err, files) => {
+//         if (err) {
+//             console.log(err);
+//             return;
+//         }
+//
+//         files.forEach(file => {
+//             const pathForFile = path.join(forEdit, file);
+//             // console.log(pathForFile);
+//
+//             fs.stat(pathForFile, (err1, stats) => {
+//                 if (err1) {
+//                     console.log(err1);
+//                     return;
+//                 }
+//
+//                 console.log(stats.isDirectory(), '--', file);
+//
+//                 if (stats.isDirectory()) {
+//                     moveFiles(pathForFile);
+//                     return;
+//                 }
+//
+//                 const newPath = path.join(movedFiles, file);
+//                 fs.rename(pathForFile, newPath, err2 => {
+//                     if (err2) {
+//                         console.log(err2);
+//                     }
+//                 })
+//             })
+//         })
+//     })
+//
+// }
+//
+// moveFiles(forEdit);
 
 
 
