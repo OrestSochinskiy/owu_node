@@ -89,41 +89,44 @@ fs.mkdir(movedFiles, {recursive: true}, err => {
 
 const forEdit = path.join(secondTask, 'forEdit');
 
-function moveFile (forEdit) {
+function moveFiles(forEdit) {
 
-fs.readdir(forEdit,(err, files) => {
-    if (err) {
-        console.log(err);
-        return;
-    }
+    fs.readdir(forEdit, (err, files) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
 
-    files.forEach(file => {
-        const pathForFile = path.join(forEdit, file);
-        // console.log(pathForFile);
+        files.forEach(file => {
+            const pathForFile = path.join(forEdit, file);
+            // console.log(pathForFile);
 
-        fs.stat(pathForFile, (err1, stats) => {
-            if (err1) {
-                console.log(err1);
-                return;
-            }
-
-            console.log(stats.isDirectory(), '--', file);
-
-            if (stats.isDirectory()) {
-                moveFile(pathForFile);
-                return;
-            }
-
-            fs.rename(pathForFile,movedFiles, err2 => {
-                if (err2) {
-                    console.log(err2);
+            fs.stat(pathForFile, (err1, stats) => {
+                if (err1) {
+                    console.log(err1);
+                    return;
                 }
+
+                console.log(stats.isDirectory(), '--', file);
+
+                if (stats.isDirectory()) {
+                    moveFiles(pathForFile);
+                    return;
+                }
+
+                const newPath = path.join(movedFiles, file);
+                fs.rename(pathForFile, newPath, err2 => {
+                    if (err2) {
+                        console.log(err2);
+                    }
+                })
             })
         })
     })
-})
 
 }
+
+moveFiles(forEdit);
 
 
 
