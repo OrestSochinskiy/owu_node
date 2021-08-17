@@ -17,7 +17,8 @@ fs.readdir(femaleGroup, (err, files) => {
 
 
     files.forEach(file => {
-        fs.readFile(path.join(femaleGroup, file), (err1, data) => {
+        const filePath = path.join(femaleGroup, file);
+        fs.readFile(filePath, (err1, data) => {
             if (err1) {
                 console.log(err1);
                 return;
@@ -33,13 +34,22 @@ fs.readdir(femaleGroup, (err, files) => {
                 // console.log(oldPath, file, '-- old path');
                 // console.log(newPath, file, '-- new path');
 
-                fs.rename(oldPath, newPath, err2 => {
-                    if (err2) {
-                        console.log(err2);
-                    }
-                });
+                // fs.rename(oldPath, newPath, err2 => {
+                //     if (err2) {
+                //         console.log(err2);
+                //     }
+                // });
             }
         })
     });
 
 });
+
+// fs.readdir(maleGroup,(err, files) => {
+//     if (err) {
+//         console.log(err);
+//         return;
+//     }
+//
+//     files.forEach(file =>)
+// })
