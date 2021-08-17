@@ -81,13 +81,16 @@ const path = require('path');
 
 /*<--------------------------------------------------Second task----------------------------------------------------------->*/
 
-const movedFiles = path.join(__dirname, 'SecondTask', 'movedFiles');
 const secondTask = path.join(__dirname, 'SecondTask');
+const movedFiles = path.join(__dirname, 'SecondTask', 'movedFiles');
 fs.mkdir(movedFiles, {recursive: true}, err => {
     if (err) console.log(err);
 });
 
 const forEdit = path.join(secondTask, 'forEdit');
+
+function moveFile (forEdit) {
+
 fs.readdir(forEdit,(err, files) => {
     if (err) {
         console.log(err);
@@ -105,9 +108,23 @@ fs.readdir(forEdit,(err, files) => {
             }
 
             console.log(stats.isDirectory(), '--', file);
+
+            if (stats.isDirectory()) {
+                moveFile(pathForFile);
+                return;
+            }
+
+            fs.rename(pathForFile,movedFiles, err2 => {
+                if (err2) {
+                    console.log(err2);
+                }
+            })
         })
     })
 })
+
+}
+
 
 
 
