@@ -12,38 +12,19 @@ const users = require('./users');
 // і розподілити ваших юзерів саме по відповідних папках
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-const foldersCreator = () => {
-    fs.mkdir(path.join(__dirname, 'manOlder20'),
-        {recursive: true},
-        err => {
-            if (err) {
-                console.log(err);
-            }
-        });
+const namesOfFolders = ['manOlder20', 'manYounger20', 'womanOlder20', 'womanYounger20'];
 
-    fs.mkdir(path.join(__dirname, 'manYounger20'),
-        {recursive: true},
-        err => {
-            if (err) {
-                console.log(err);
-            }
-        });
 
-    fs.mkdir(path.join(__dirname, 'womanOlder20'),
-        {recursive: true},
-        err => {
-            if (err) {
-                console.log(err);
-            }
-        });
+const foldersCreator = (arrayOfNames) => {
 
-    fs.mkdir(path.join(__dirname, 'womanYounger20'),
-        {recursive: true},
-        err => {
+    arrayOfNames.forEach(name => {
+        let folderPath = path.join(__dirname, name)
+        fs.mkdir(folderPath, {recursive: true}, err => {
             if (err) {
                 console.log(err);
             }
         });
+    });
 }
 
 
@@ -72,9 +53,9 @@ const sortByAgeAndGender = (arrayOfUsers) => {
         } else {
             fileWriter(womanYounger20Path(`${user.name}.txt`), JSON.stringify(user));
         }
-
     });
 }
 
-foldersCreator();
+foldersCreator(namesOfFolders);
 sortByAgeAndGender(users);
+
