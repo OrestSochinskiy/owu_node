@@ -12,6 +12,40 @@ const users = require('./users');
 // і розподілити ваших юзерів саме по відповідних папках
 /*--------------------------------------------------------------------------------------------------------------------*/
 
+const foldersCreator = () => {
+    fs.mkdir(path.join(__dirname, 'manOlder20'),
+        {recursive: true},
+        err => {
+            if (err) {
+                console.log(err);
+            }
+        });
+
+    fs.mkdir(path.join(__dirname, 'manYounger20'),
+        {recursive: true},
+        err => {
+            if (err) {
+                console.log(err);
+            }
+        });
+
+    fs.mkdir(path.join(__dirname, 'womanOlder20'),
+        {recursive: true},
+        err => {
+            if (err) {
+                console.log(err);
+            }
+        });
+
+    fs.mkdir(path.join(__dirname, 'womanYounger20'),
+        {recursive: true},
+        err => {
+            if (err) {
+                console.log(err);
+            }
+        });
+}
+
 
 const manOlder20Path = (fileName) => path.join(__dirname, 'manOlder20', fileName);
 const manYounger20Path = (fileName) => path.join(__dirname, 'manYounger20', fileName);
@@ -23,13 +57,24 @@ const fileWriter = (filePath, data) => {
         if (err) {
             console.log(`Some troubles with ${user.name}`, err);
         }
-    })
+    });
 }
 
-users.forEach(user => {
-    if (user.age > 20) {
-        fileWriter(manOlder20Path(`${user.name}.txt`), JSON.stringify(user));
-    }
-})
 
-// fileWriter(manOlder20Path('test.txt'), 'test data');
+const sortByAgeAndGender = (arrayOfUsers) => {
+    arrayOfUsers.forEach(user => {
+        if (user.age >= 20 && user.gender === 'male') {
+            fileWriter(manOlder20Path(`${user.name}.txt`), JSON.stringify(user));
+        } else if (user.age < 20 && user.gender === 'male') {
+            fileWriter(manYounger20Path(`${user.name}.txt`), JSON.stringify(user));
+        } else if (user.age >= 20 && user.gender === 'female') {
+            fileWriter(womanOlder20Path(`${user.name}.txt`), JSON.stringify(user));
+        } else {
+            fileWriter(womanYounger20Path(`${user.name}.txt`), JSON.stringify(user));
+        }
+
+    });
+}
+
+foldersCreator();
+sortByAgeAndGender(users);
