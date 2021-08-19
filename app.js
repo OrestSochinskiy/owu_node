@@ -43,8 +43,6 @@ app.post('/login', (req, res) => {
     }
 
     res.redirect(`/users/${indexOfUser}`);
-
-
 });
 /*----------------------------------------------------------------------------------------------------------------*/
 
@@ -72,7 +70,6 @@ app.post('/registration', (req, res) => {
     }
 
     res.redirect('/error');
-
 });
 
 
@@ -94,7 +91,6 @@ app.get('/users/:user_id', (req, res) => {
         res.status(404).end(`User with id "${user_id}" Not Found`);
         return;
     }
-
 
     res.render('singleUser', {currentUser});
 });
