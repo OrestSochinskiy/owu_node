@@ -57,7 +57,32 @@ app.post('/login', (req, res) => {
 /*-----------------------------------------REG--------------------------------------------------------------------*/
 app.get('/registration', (req, res) => {
     res.render('registration');
-})
+});
+
+app.post('/registration', (req, res) => {
+    fs.readFile(usersPath, (err, data) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        const {email} = req.body;
+
+        users.forEach(user => {
+            if (email !== user.email) {
+                users.push(req.body);
+
+                fs.writeFile(usersPath, JSON.stringify(users), err1 => {
+                    if (err1) {
+                        console.log(err1);
+                    }
+                });
+
+                res.redirect('/users');
+            }
+        });
+    });
+});
 /*----------------------------------------------------------------------------------------------------------------*/
 
 /*-----------------------------------------USERS------------------------------------------------------------------*/
