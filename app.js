@@ -32,25 +32,21 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    fs.readFile(usersPath, (err, data) => {
-        if (err) {
-            console.log(err);
+
+
+    const {email, password} = req.body;
+
+    for (const user of users) {
+        if (user.email === email && user.password === password) {
+            res.redirect('/users');
             return;
         }
-
-        const {email, password} = req.body;
-
-        for (const user of users) {
-            if (user.email === email && user.password === password) {
-                res.redirect('/users');
-                return;
-            }
-        }
+    }
 
 
-        res.redirect('/registration');
+    res.redirect('/registration');
 
-    });
+
 });
 /*----------------------------------------------------------------------------------------------------------------*/
 
@@ -60,28 +56,26 @@ app.get('/registration', (req, res) => {
 });
 
 app.post('/registration', (req, res) => {
-    fs.readFile(usersPath, (err, data) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
 
-        const {email} = req.body;
+    const {email} = req.body;
+    // for (const user of users) {
+    //     if (email !== user.email) {
+    //         users.push(req.body);
+    //
+    //         fs.writeFile(usersPath, `module.exports = ${JSON.stringify(users)}`, err1 => {
+    //             if (err1) {
+    //                 console.log(err1);
+    //             }
+    //         });
+    //
+    //         res.redirect('/users');
+    //         return;
+    //     }
+    //     res.render('error');
+    // }
 
-        users.forEach(user => {
-            if (email !== user.email) {
-                users.push(req.body);
 
-                fs.writeFile(usersPath, JSON.stringify(users), err1 => {
-                    if (err1) {
-                        console.log(err1);
-                    }
-                });
 
-                res.redirect('/users');
-            }
-        });
-    });
 });
 /*----------------------------------------------------------------------------------------------------------------*/
 
