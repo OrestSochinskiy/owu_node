@@ -36,19 +36,13 @@ app.post('/login', (req, res) => {
 
     const {email, password} = req.body;
 
-    // for (const user of users) {
-    //     if (user.email === email && user.password === password) {
-    //         res.redirect('/users');
-    //         return;
-    //     }
-    // }
-    const isFind = users.find(user => user.email === email && user.password === password);
-    if (isFind) {
-        res.redirect('/users');
+    const indexOfUser = users.findIndex(user => user.email === email && user.password === password);
+    if (indexOfUser === -1) {
+        res.redirect('/registration');
         return;
     }
 
-    res.redirect('/registration');
+    res.redirect(`/users/${indexOfUser}`);
 
 
 });
