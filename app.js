@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const users = require('./db/users');
+const {PORT} = require('./configs/variables');
 
 const staticPath = path.join(__dirname, 'static');
 const usersPath = path.join(__dirname, 'db', 'users.js');
@@ -100,7 +101,7 @@ app.get('/users/:user_id', (req, res) => {
 
 
 /*----------------------------------------------------------------------------------------------------------------*/
-app.listen(5000, () => {
+app.listen(PORT, () => {
     console.log('App listen 5000');
 });
 
