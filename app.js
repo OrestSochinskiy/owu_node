@@ -43,6 +43,7 @@ app.post('/login', (req, res) => {
         for (const user of users) {
             if (user.email === email && user.password === password) {
                 res.redirect('/users');
+                return;
             }
         }
 
