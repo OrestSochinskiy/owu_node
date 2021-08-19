@@ -74,9 +74,28 @@ app.post('/registration', (req, res) => {
     //     res.render('error');
     // }
 
+    const isFind = users.find(user => user.email === email);
+    if (!isFind) {
+        users.push(req.body);
 
+        fs.writeFile(usersPath, `module.exports = ${JSON.stringify(users)}`, err1 => {
+            if (err1) {
+                console.log(err1);
+            }
+        });
+
+        res.redirect('/users');
+        return;
+    }
+
+    res.redirect('/error');
 
 });
+
+
+app.get('/error', (req, res) => {
+    res.render('error');
+})
 /*----------------------------------------------------------------------------------------------------------------*/
 
 /*-----------------------------------------USERS------------------------------------------------------------------*/
