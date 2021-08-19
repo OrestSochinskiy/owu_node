@@ -9,13 +9,19 @@
 </head>
 <body>
 
-
-{{#each users}}
-    <div>
-        {{this.name}}
-        {{this.email}}
-    </div>
-    <hr/>
-{{/each}}
+<div>
+    {{#each users}}
+        <div>
+            {{this.name}}
+            {{this.email}}
+        </div>
+        <hr/>
+    {{/each}}
+</div>
+<div>
+    <form action="/">
+        <input type="submit" value="Home Page">
+    </form>
+</div>
 </body>
 </html>
