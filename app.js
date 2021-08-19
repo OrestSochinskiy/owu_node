@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
 /*-----------------------------------------LOG--------------------------------------------------------------------*/
 app.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', {users});
 });
 
 app.post('/login', (req, res) => {
@@ -96,7 +96,7 @@ app.get('/users/:user_id', (req, res) => {
     }
 
 
-    res.json(currentUser);
+    res.render('singleUser', {currentUser});
 });
 
 
