@@ -46,7 +46,7 @@ app.get('/registration', (req, res) => {
     res.render('registration');
 });
 
-app.post('/registration', (req, res) => {
+app.post('/users', (req, res) => {
     const {email} = req.body;
     const isFind = users.find(user => user.email === email);
 
