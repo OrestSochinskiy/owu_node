@@ -9,7 +9,6 @@ const {PORT} = require('./configs/variables');
 const staticPath = path.join(__dirname, 'static');
 const usersPath = path.join(__dirname, 'db', 'users.js');
 
-
 const app = express();
 
 app.use(express.json());
@@ -20,11 +19,9 @@ app.set('view engine', '.hbs');
 app.engine('.hbs', expressHbs({defaultLayout: false}));
 app.set('views', staticPath);
 
-
 app.get('/', (req, res) => {
-    res.status(200).render('welcome');
+    res.render('welcome');
 });
-
 
 /*-----------------------------------------LOG--------------------------------------------------------------------*/
 app.get('/login', (req, res) => {
@@ -33,10 +30,9 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
 
-
     const {email, password} = req.body;
-
     const indexOfUser = users.findIndex(user => user.email === email && user.password === password);
+
     if (indexOfUser === -1) {
         res.redirect('/registration');
         return;
@@ -52,10 +48,9 @@ app.get('/registration', (req, res) => {
 });
 
 app.post('/registration', (req, res) => {
-
     const {email} = req.body;
-
     const isFind = users.find(user => user.email === email);
+
     if (!isFind) {
         users.push(req.body);
 
@@ -75,7 +70,7 @@ app.post('/registration', (req, res) => {
 
 app.get('/error', (req, res) => {
     res.render('error');
-})
+});
 /*----------------------------------------------------------------------------------------------------------------*/
 
 /*-----------------------------------------USERS------------------------------------------------------------------*/
