@@ -29,7 +29,6 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-
     const {email, password} = req.body;
     const indexOfUser = users.findIndex(user => user.email === email && user.password === password);
 
