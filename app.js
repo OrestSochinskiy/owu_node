@@ -1,5 +1,4 @@
 const express = require('express');
-const expressHbs = require('express-handlebars');
 const path = require('path');
 const fs = require('fs');
 
@@ -15,19 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(staticPath));
-app.set('view engine', '.hbs');
-app.engine('.hbs', expressHbs({ defaultLayout: false }));
-app.set('views', staticPath);
-
-app.get('/', (req, res) => {
-    res.render('welcome');
-});
 
 /* -----------------------------------------LOG--------------------------------------------------------------------*/
-app.get('/login', (req, res) => {
-    res.render('login', { users });
-});
-
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
     const indexOfUser = users.findIndex((user) => user.email === email && user.password === password);
@@ -42,10 +30,6 @@ app.post('/login', (req, res) => {
 /*----------------------------------------------------------------------------------------------------------------*/
 
 /* -----------------------------------------REG--------------------------------------------------------------------*/
-app.get('/registration', (req, res) => {
-    res.render('registration');
-});
-
 app.post('/users', (req, res) => {
     const { email } = req.body;
     const isFind = users.find((user) => user.email === email);
@@ -65,29 +49,17 @@ app.post('/users', (req, res) => {
 
     res.redirect('/error');
 });
-
-app.get('/error', (req, res) => {
-    res.render('error');
-});
 /*----------------------------------------------------------------------------------------------------------------*/
 
 /* -----------------------------------------USERS------------------------------------------------------------------*/
-app.get('/users', (req, res) => {
-    res.render('users', { users });
-});
-
 app.get('/users/:user_id', (req, res) => {
     const { user_id } = req.params;
     const currentUser = users[user_id];
 
     if (!currentUser) {
         res.status(404).end(`User with id "${user_id}" Not Found`);
-        return;
     }
-
-    res.render('singleUser', { currentUser });
 });
-
 /*----------------------------------------------------------------------------------------------------------------*/
 app.listen(PORT, () => {
     console.log('App listen 5000');
