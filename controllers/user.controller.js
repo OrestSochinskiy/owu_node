@@ -1,7 +1,9 @@
-const db = require('../db/users');
 const userService = require('../services/user.service');
 
-const { findAllUsers } = userService;
+const {
+    findAllUsers,
+    findSingleUser
+} = userService;
 
 module.exports = {
     getAllUsers: (req, res) => {
@@ -12,7 +14,7 @@ module.exports = {
 
     getSingleUser: (req, res) => {
         const { user_id } = req.params;
-        const user = db[user_id];
+        const user = findSingleUser(user_id);
 
         if (!user) {
             res.status(404).json('User not found');
