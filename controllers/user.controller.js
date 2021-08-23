@@ -1,15 +1,17 @@
 const userService = require('../services/user.service');
+const users = require('../db/users.json');
 
 const {
     findAllUsers,
-    findSingleUser
+    findSingleUser,
+    createUser
 } = userService;
 
 module.exports = {
     getAllUsers: (req, res) => {
-        const users = findAllUsers();
+        const allUsers = findAllUsers();
 
-        res.json(users);
+        res.json(allUsers);
     },
 
     getSingleUser: (req, res) => {
@@ -25,6 +27,17 @@ module.exports = {
     },
 
     createUser: (req, res) => {
-        res.json('create user working');
+        const { email } = req.body;
+        const isFind = users.find((user) => user.email === email);
+
+        if (!isFind) {
+            users.push(req.body);
+
+            createUser(users);
+            res.status(200).redirect('/users');
+            return;
+        }
+
+        res.status(401).send('This email is already registered');
     }
 };
