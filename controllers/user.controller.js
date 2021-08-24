@@ -1,9 +1,7 @@
 const userService = require('../services/user.service');
-const users = require('../db/users.json');
 
 const {
     findAllUsers,
-    findSingleUser,
     createUser
 } = userService;
 
@@ -16,18 +14,20 @@ module.exports = {
 
     getSingleUser: (req, res) => {
         const { user_id } = req.params;
-        const user = findSingleUser(user_id);
+        const users = findAllUsers();
+        const currentUser = users[user_id];
 
-        if (!user) {
+        if (!currentUser) {
             res.status(404).json('User not found');
             return;
         }
 
-        res.json(user);
+        res.json(currentUser);
     },
 
     createUser: (req, res) => {
         const { email } = req.body;
+        const users = findAllUsers();
         const isFind = users.find((user) => user.email === email);
 
         if (!isFind) {
