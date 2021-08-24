@@ -6,7 +6,7 @@ const usersPath = path.join(process.cwd(), 'db', 'users.json');
 module.exports = {
     findAllUsers: () => {
         const users = fs.readFile(usersPath);
-        return JSON.parse(users);
+        return JSON.parse(users.toString());
     },
 
     createUser: (usersArr) => {
