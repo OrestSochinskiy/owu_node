@@ -1,19 +1,24 @@
-const fs = require('fs/promises');
-const path = require('path');
-
-const usersPath = path.join(process.cwd(), 'db', 'users.json');
+const User = require('../dataBase/User');
 
 module.exports = {
-    findAllUsers: async () => {
-        const users = await fs.readFile(usersPath);
-        return JSON.parse(users.toString());
-    },
+    findAllUsers: () => User.find(),
 
-    createUser: async (usersArr) => {
-        await fs.writeFile(usersPath, JSON.stringify(usersArr), (err) => {
-            if (err) {
-                console.log(err);
-            }
-        });
-    }
+    // findByName: (userName) => {
+    //     const foundUser = User.find({ name: userName }, (err, result) => {
+    //         if (err) {
+    //             console.log(err, 'aboba');
+    //         }
+    //         console.log(result);
+    //     });
+    //
+    //     return foundUser;
+    // },
+
+    findById: (userId) => User.findById(userId),
+
+    createUser: (user) => User.create(user),
+
+    deleteUser: (userId) => User.findByIdAndDelete(userId)
+
+    // deleteUser: (userId)
 };

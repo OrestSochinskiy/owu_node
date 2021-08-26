@@ -1,43 +1,64 @@
 const userService = require('../services/user.service');
+// const ErrorHandler = require('../errors/ErrorHandler');
+// const User = require('../dataBase/User');
 
 const {
     findAllUsers,
-    createUser
+    createUser,
+    findById,
+    deleteUser
 } = userService;
 
 module.exports = {
-    getAllUsers: (req, res) => {
-        const allUsers = findAllUsers();
+    getAllUsers: async (req, res, next) => {
+        try {
+            const allUsers = await findAllUsers();
 
-        res.json(allUsers);
+            res.json(allUsers);
+        } catch (e) {
+            next(e);
+        }
     },
 
-    getSingleUser: (req, res) => {
-        const { user_id } = req.params;
-        const users = findAllUsers();
-        const currentUser = users[user_id];
-
-        if (!currentUser) {
-            res.status(404).json('User not found');
-            return;
+    getUserById: async (req, res, next) => {
+        try {
+            const { user_id } = req.params;
+            const currentUser = await findById(user_id);
+            res.json(currentUser);
+        } catch (e) {
+            next(e);
         }
-
-        res.json(currentUser);
     },
 
-    createUser: (req, res) => {
-        const { email } = req.body;
-        const users = findAllUsers();
-        const isFind = users.find((user) => user.email === email);
+    // getUserByName: (req, res, next) => {
+    //     try {
+    //         const { user_name } = req.params;
+    //         // const currenUser = await findByName(userName);
+    //         // res.json(currenUser);
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // },
 
-        if (!isFind) {
-            users.push(req.body);
+    createUser: async (req, res, next) => {
+        try {
+            const createdUser = await createUser(req.body);
 
-            createUser(users);
-            res.status(200).redirect('/users');
-            return;
+            res.json(createdUser);
+        } catch (e) {
+            next(e);
         }
+    },
 
-        res.status(401).send('This email is already registered');
+    deleteUser: async (req, res, next) => {
+        try {
+            const { user_id } = req.params;
+
+            await deleteUser(user_id);
+
+            res.json('deleted');
+        } catch (e) {
+            next(e);
+        }
     }
 };
