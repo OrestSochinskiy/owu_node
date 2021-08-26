@@ -1,6 +1,11 @@
 const User = require('../dataBase/User');
 const ErrorHandler = require('../errors/ErrorHandler');
 const { BAD_REQUEST, NOT_FOUND } = require('../configs/statusCodes.enum');
+const {
+    USER_NOT_FOUND,
+    ALREADY_EXIST,
+    EMPTY_FIELDS
+} = require('../messages/messages');
 
 module.exports = {
     isUserExist: async (req, res, next) => {
@@ -10,7 +15,7 @@ module.exports = {
             const currentUser = await User.findById(user_id);
 
             if (!currentUser) {
-                throw new ErrorHandler(NOT_FOUND, 'User with id not found');
+                throw new ErrorHandler(NOT_FOUND, USER_NOT_FOUND);
             }
 
             req.user = currentUser;
@@ -27,7 +32,7 @@ module.exports = {
             const isEmailFound = await User.findOne({ email });
 
             if (isEmailFound) {
-                throw new ErrorHandler(BAD_REQUEST, `${email} -- is already in use`);
+                throw new ErrorHandler(BAD_REQUEST, `${email} ${ALREADY_EXIST}`);
             }
             next();
         } catch (e) {
@@ -40,7 +45,7 @@ module.exports = {
             const { name, email } = req.body;
 
             if (!name || !email) {
-                throw new ErrorHandler(BAD_REQUEST, 'empty fields');
+                throw new ErrorHandler(BAD_REQUEST, EMPTY_FIELDS);
             }
 
             next();
