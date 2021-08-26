@@ -24,7 +24,7 @@ app.listen(PORT, () => {
 function _notFoundError(err, req, res, next) {
     next({
         status: err.status || 404,
-        message: err.message || 'TEST MESSAGE'
+        message: err.message || 'Not found'
     });
 }
 
