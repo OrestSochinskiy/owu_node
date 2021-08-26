@@ -5,6 +5,7 @@ module.exports = {
     isUserExist: async (req, res, next) => {
         try {
             const { user_id } = req.params;
+
             const currentUser = await User.findById(user_id);
 
             if (!currentUser) {
@@ -21,6 +22,7 @@ module.exports = {
     isEmailUsed: async (req, res, next) => {
         try {
             const { email } = req.body;
+
             const isEmailFound = await User.findOne({ email });
 
             if (isEmailFound) {

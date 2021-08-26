@@ -6,6 +6,7 @@ module.exports = {
     isCarExist: async (req, res, next) => {
         try {
             const { car_id } = req.params;
+
             const car = await Car.findById(car_id);
 
             if (!car) {

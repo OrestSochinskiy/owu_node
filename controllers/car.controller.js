@@ -38,6 +38,7 @@ module.exports = {
     deleteCar: async (req, res, next) => {
         try {
             const { car } = req;
+
             await deleteCar(car._id);
 
             res.json('deleted');
