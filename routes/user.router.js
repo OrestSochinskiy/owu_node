@@ -4,10 +4,11 @@ const { userController } = require('../controllers');
 const {
     isUserExist,
     isEmailUsed,
+    isUserValid
 } = require('../middlewares/user.middleware');
 
 router.get('/', userController.getAllUsers);
-router.post('/', isEmailUsed, userController.createUser);
+router.post('/', isUserValid, isEmailUsed, userController.createUser);
 router.get('/:user_id', isUserExist, userController.getUserById);
 router.delete('/:user_id', isUserExist, userController.deleteUser);
 
