@@ -22,8 +22,7 @@ module.exports = {
 
     getUserById: async (req, res, next) => {
         try {
-            const { user_id } = req.params;
-            const currentUser = await findById(user_id);
+            const currentUser = await findById(req.query);
             res.json(currentUser);
         } catch (e) {
             next(e);
