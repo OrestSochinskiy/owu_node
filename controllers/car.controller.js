@@ -1,4 +1,5 @@
-const carService = require('../services/car.service');
+// const carService = require('../services/car.service');
+const { carService } = require('../services');
 
 const {
     findAllCars,
