@@ -5,15 +5,14 @@ const { PORT } = require('./configs/variables');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/node-hw');
+connectionDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const { userRouter, authRouter } = require('./routes');
+const { userRouter } = require('./routes');
 
 app.use('/users', userRouter);
-app.use('/auth', authRouter);
 app.use('*', _notFoundError);
 app.use(_errorHandler);
 
@@ -35,4 +34,14 @@ function _errorHandler(err, req, res, next) {
         .json({
             message: err.message
         });
+}
+
+function connectionDB() {
+    mongoose.connect('mongodb://localhost:27017/node-hw');
+
+    const { connection } = mongoose;
+
+    connection.on('err', (err) => {
+        console.log(err);
+    });
 }
