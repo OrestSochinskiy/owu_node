@@ -5,5 +5,7 @@ module.exports = {
 
     createUser: (user) => User.create(user),
 
-    deleteUser: (userId) => User.findByIdAndDelete(userId)
+    deleteUser: (userId) => User.findByIdAndDelete(userId),
+
+    updateUser: (userId, dataToUpdate) => User.findByIdAndUpdate(userId, dataToUpdate)
 };

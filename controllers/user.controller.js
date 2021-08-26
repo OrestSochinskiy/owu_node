@@ -3,8 +3,11 @@ const { userService } = require('../services');
 const {
     findAllUsers,
     createUser,
+    updateUser,
     deleteUser
 } = userService;
+
+const { UPDATED, DELETED } = require('../messages/messages');
 
 module.exports = {
     getAllUsers: async (req, res, next) => {
@@ -35,13 +38,25 @@ module.exports = {
         }
     },
 
+    updateUser: async (req, res, next) => {
+        try {
+            const { userId } = req.params;
+
+            await updateUser(userId, req.body);
+
+            res.json(UPDATED);
+        } catch (e) {
+            next(e);
+        }
+    },
+
     deleteUser: async (req, res, next) => {
         try {
             const { user } = req;
 
             await deleteUser(user._id);
 
-            res.json('deleted');
+            res.json(DELETED);
         } catch (e) {
             next(e);
         }
