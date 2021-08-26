@@ -10,9 +10,10 @@ connectionDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const { userRouter } = require('./routes');
+const { userRouter, carRouter } = require('./routes');
 
 app.use('/users', userRouter);
+app.use('/cars', carRouter);
 app.use('*', _notFoundError);
 app.use(_errorHandler);
 
@@ -23,7 +24,7 @@ app.listen(PORT, () => {
 function _notFoundError(err, req, res, next) {
     next({
         status: err.status || 404,
-        message: err.message || 'Not found'
+        message: err.message || 'TEST MESSAGE'
     });
 }
 
