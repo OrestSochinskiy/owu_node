@@ -1,11 +1,8 @@
 const userService = require('../services/user.service');
-// const ErrorHandler = require('../errors/ErrorHandler');
-// const User = require('../dataBase/User');
 
 const {
     findAllUsers,
     createUser,
-    findById,
     deleteUser
 } = userService;
 
@@ -20,24 +17,13 @@ module.exports = {
         }
     },
 
-    getUserById: async (req, res, next) => {
+    getUserById: (req, res, next) => {
         try {
-            const currentUser = await findById(req.query);
-            res.json(currentUser);
+            res.json(req.user);
         } catch (e) {
             next(e);
         }
     },
-
-    // getUserByName: (req, res, next) => {
-    //     try {
-    //         const { user_name } = req.params;
-    //         // const currenUser = await findByName(userName);
-    //         // res.json(currenUser);
-    //     } catch (e) {
-    //         next(e);
-    //     }
-    // },
 
     createUser: async (req, res, next) => {
         try {
@@ -51,9 +37,8 @@ module.exports = {
 
     deleteUser: async (req, res, next) => {
         try {
-            const { user_id } = req.params;
-
-            await deleteUser(user_id);
+            const { user } = req;
+            await deleteUser(user._id);
 
             res.json('deleted');
         } catch (e) {
