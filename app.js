@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const { PORT } = require('./configs/variables');
+const { PORT, MONGO_CONNECTION } = require('./configs/variables');
 
 const app = express();
 
@@ -38,7 +38,7 @@ function _errorHandler(err, req, res, next) {
 }
 
 function connectionDB() {
-    mongoose.connect('mongodb://localhost:27017/node-hw');
+    mongoose.connect(`${MONGO_CONNECTION}node-hw`);
 
     const { connection } = mongoose;
 
